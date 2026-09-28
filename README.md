@@ -29,3 +29,9 @@ The browser/worker-neutral module is in `src/quants.js`. It provides:
 - a small plugin API for any compatible site
 
 See `docs/NEWS_PHI.md` and `examples/browser.js`.
+
+## Shared click reader
+
+`src/click-reader.js` is an opt-in browser adapter for participating Infinity sites. Install it with a `site` name and `getContext()` returning the current topic, Quant ID and optional token ID. It records link and button actions with a parent Quant, then posts metadata through `StarQuestCloudLedger.authenticatedFetch` to the authenticated Quanta Phi ledger. It queues up to 100 events locally while the wallet or network is unavailable and retries on focus. It never reads input values, form contents, full URLs, passwords, or private browsing data. The server binds events to the authenticated wallet; the public topic graph does not receive personal click metadata.
+
+A script cannot observe other origins by itself. Each site must include the reader and supply its own context. Quanta Phi is the first integration; other site integrations can reuse the same adapter.
